@@ -6,7 +6,7 @@
 namespace fs = std::experimental::filesystem;
 
 template <typename Comparison, typename Builder>
-void organize_by_ids(const fs::path& directory, Comparison compare, Builder build)
+void rename_dir(const fs::path& directory, Comparison compare, Builder build)
 {
 	auto end = fs::directory_iterator();
 
@@ -48,7 +48,8 @@ int main(int argc, char* argv[])
 		{
 			if (fs::is_directory(dir.path()))
 			{
-				organize_by_ids(dir, photo_sort::date_compare(), photo_sort::date_builder());
+				rename_dir(dir, photo_sort::date_compare(), photo_sort::date_builder());
+				//rename_dir(dir, photo_sort::pid_compare(), photo_sort::pid_builder());
 				std::cout << "Done.\n\n";
 			}
 		}
