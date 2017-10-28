@@ -1,7 +1,7 @@
 // Organize iPod Pictures.cpp : Defines the entry point for the console application.
 #include "stdafx.h"
-#include "pid_sort.hpp"
-#include "date_sort.hpp"
+#include "photo_sort\pid_sort.hpp"
+#include "photo_sort\date_sort.hpp"
 
 namespace fs = std::experimental::filesystem;
 
