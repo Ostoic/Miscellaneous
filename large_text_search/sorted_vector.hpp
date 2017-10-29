@@ -4,8 +4,6 @@
 #include <algorithm>
 #include <string_view>
 
-#include "ref_wrapper.hpp"
-
 namespace lts
 {
 	template <typename T, typename Comparator = std::less<T>, typename Allocator = std::allocator<T>>
@@ -49,9 +47,9 @@ namespace lts
 			return it;
 		}
 
-		std::vector<ref_wrapper<std::string>> find_matches(const T& key, std::size_t size)
+		std::vector<std::string_view> find_matches(const T& key, std::size_t size)
 		{
-			std::vector<ref_wrapper<std::string>> matches;
+			std::vector<std::string_view> matches;
 			matches.reserve(size);
 
 			auto currentIt = begin();
@@ -65,7 +63,7 @@ namespace lts
 				// Make sure we have a real partial match
 				std::string_view potential = *currentIt;
 				if (key == potential.substr(0, key.size()))
-					matches.push_back(*currentIt);
+					matches.push_back(potential);
 			}
 
 			return matches;
