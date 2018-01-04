@@ -30,12 +30,15 @@ bool is_cpp_extension(const std::wstring& extension) noexcept
 	return std::find(extensions.begin(), extensions.end(), extension) != extensions.end();
 }
 
+<<<<<<< HEAD
 void display_usage() noexcept
 {
 	std::wcerr << "Usage: loc <folder path>\n";
 	std::wcerr << "LoC 1.0 by Shaun Ostoic\n";
 }
 
+=======
+>>>>>>> 20525a407080cc01f1bc75059c832572291627a3
 int main(int argc, char* argv[])
 {
 	if (argc < 2)
