@@ -31,15 +31,6 @@ bool is_cpp_extension(const std::wstring& extension) noexcept
 	return std::find(extensions.begin(), extensions.end(), extension) != extensions.end();
 }
 
-bool contained_in_cwd(const fs::path& path)
-{
-	for (auto entry : fs::recursive_directory_iterator(fs::current_path()))
-		if (fs::equivalent(entry.path(), path))
-			return true;
-	
-	return false;
-}
-
 int main(int argc, char* argv[])
 {
 	if (argc < 2)
