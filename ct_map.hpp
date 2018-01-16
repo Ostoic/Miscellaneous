@@ -22,7 +22,7 @@ public: // interface
 
 	constexpr std::size_t count(const key_type& key) const noexcept;
 
-	constexpr auto& find(const key_type& key) const;
+	constexpr const auto& find(const key_type& key) const;
 
 	constexpr const auto& operator[](const key_type& key) const;
 

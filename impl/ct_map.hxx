@@ -40,7 +40,7 @@ inline constexpr std::size_t ct_map<K, V, N>::count(const key_type& key) const n
 }
 
 template <typename K, typename V, std::size_t N = 5>
-inline constexpr auto& ct_map<K, V, N>::find(const key_type& key) const
+inline constexpr const auto& ct_map<K, V, N>::find(const key_type& key) const
 {
 	for (std::size_t i = 0; i < N; i++)
 	{
