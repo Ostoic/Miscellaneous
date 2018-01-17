@@ -3,14 +3,14 @@
 #include <array>
 #include <tuple>
 
-template <typename Key, typename Value, std::size_t Size = 5>
+template <typename Key, typename Value, std::size_t Capacity = 5>
 class ct_map
 {
 public: // subtypes
 	using key_type = Key;
 	using value_type = Value;
 
-	using iterator = typename std::array<std::pair<Key, Value>, Size>::iterator;
+	using iterator = typename std::array<std::pair<Key, Value>, Capacity>::const_iterator;
 	using const_iterator = iterator;
 
 public: // interface
@@ -20,20 +20,28 @@ public: // interface
 
 	constexpr std::size_t size() const noexcept;
 
-	constexpr std::size_t count(const key_type& key) const noexcept;
-
-	constexpr const auto& find(const key_type& key) const;
+	constexpr bool empty() const noexcept;
 
 	constexpr const auto& operator[](const key_type& key) const;
+
+	constexpr std::size_t count(const key_type& key) const noexcept;
+
+	constexpr iterator find(const key_type& key) const;
+
+	//ct_map insert(const std::pair<Key, Value>&) const noexcept;
+
+	//ct_map operator=(const ct_map& other) const noexcept;
 
 public: // {ctor}
 	constexpr ct_map() = default;
 
-	template <typename T, typename... Ts>
-	constexpr ct_map(T&& t, Ts&&... ts);
+	constexpr ct_map(const std::array<std::pair<Key, Value>, Capacity>&) noexcept;
+
+	template <typename... Ts>
+	constexpr ct_map(Ts&&... ts);
 
 private: // data
-	std::array<std::pair<key_type, value_type>, Size> data_;
+	std::array<std::pair<key_type, value_type>, Capacity> data_;
 };
 
 // Implementation:

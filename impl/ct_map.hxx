@@ -1,31 +1,35 @@
 #pragma once
 #include "ct_map.hpp"
 
+//interface: iterators
 template <typename K, typename V, std::size_t N = 5>
-template <typename T, typename... Ts>
-inline constexpr ct_map<K, V, N>::ct_map(T&& t, Ts&&... ts)
-	: data_(std::array<T, 1 + sizeof...(Ts)>{t, std::forward<Ts>(ts)...}) {}
-
-template <typename K, typename V, std::size_t N = 5>
-inline constexpr typename ct_map<K, V, N>::iterator 
+inline constexpr typename ct_map<K, V, N>::iterator
 ct_map<K, V, N>::begin() const noexcept
 {
 	return this->data_.begin();
 }
 
 template <typename K, typename V, std::size_t N = 5>
-inline constexpr typename ct_map<K, V, N>::iterator 
+inline constexpr typename ct_map<K, V, N>::iterator
 ct_map<K, V, N>::end() const noexcept
 {
 	return this->data_.end();
 }
 
+//interface: capcity
 template <typename K, typename V, std::size_t N = 5>
 inline constexpr std::size_t ct_map<K, V, N>::size() const noexcept
 {
 	return this->data_.size();
 }
 
+template <typename K, typename V, std::size_t N = 5>
+inline constexpr bool ct_map<K, V, N>::empty() const noexcept
+{
+	return N == 0;
+}
+
+//interface: lookup
 template <typename K, typename V, std::size_t N = 5>
 inline constexpr std::size_t ct_map<K, V, N>::count(const key_type& key) const noexcept
 {
@@ -40,17 +44,37 @@ inline constexpr std::size_t ct_map<K, V, N>::count(const key_type& key) const n
 }
 
 template <typename K, typename V, std::size_t N = 5>
-inline constexpr const auto& ct_map<K, V, N>::find(const key_type& key) const
+inline constexpr typename ct_map<K, V, N>::iterator 
+ct_map<K, V, N>::find(const key_type& key) const
 {
 	for (std::size_t i = 0; i < N; i++)
 	{
 		if (std::get<0>(this->data_[i]) == key)
-			return std::get<1>(this->data_[i]);
+			return iterator{this->data_.data() + i};
 	}
+
+	return this->end();
 }
 
 template <typename K, typename V, std::size_t N = 5>
 inline constexpr const auto& ct_map<K, V, N>::operator[](const key_type& key) const
 {
-	return this->find(key);
+	return *this->find(key);
 }
+
+//template <typename K, typename V, std::size_t N = 5>
+//template <std::size_t M>
+//ct_map<K, V, M> ct_map<K, V, N>::operator=(const ct_map<K, V, M>& other) const noexcept
+//{
+//	return 
+//}
+
+//{ctor}:
+template <typename K, typename V, std::size_t N>
+template <typename... Ts>
+inline constexpr ct_map<K, V, N>::ct_map(Ts&&... ts)
+	: data_(std::array<std::common_type_t<Ts...>, sizeof...(Ts)>{std::forward<Ts>(ts)...}) {}
+
+template <typename K, typename V, std::size_t N = 5>
+inline constexpr ct_map<K, V, N>::ct_map(const std::array<std::pair<K, V>, N>& array) noexcept
+	: data_(array) {}
