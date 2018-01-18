@@ -44,5 +44,8 @@ private: // data
 	std::array<std::pair<key_type, value_type>, Capacity> data_;
 };
 
+template <typename... Ts>
+constexpr auto make_meta_map(Ts&&... ts) noexcept;
+
 // Implementation:
-#include "ct_map.hxx"
+#include "meta_map.hxx"

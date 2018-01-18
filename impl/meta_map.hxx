@@ -1,5 +1,5 @@
 #pragma once
-#include "ct_map.hpp"
+#include "meta_map.hpp"
 
 //interface: iterators
 template <typename K, typename V, std::size_t N = 5>
@@ -78,3 +78,14 @@ inline constexpr ct_map<K, V, N>::ct_map(Ts&&... ts)
 template <typename K, typename V, std::size_t N = 5>
 inline constexpr ct_map<K, V, N>::ct_map(const std::array<std::pair<K, V>, N>& array) noexcept
 	: data_(array) {}
+
+//free:
+
+template <typename... Ts>
+inline constexpr auto make_meta_map(Ts&&... ts) noexcept
+{
+	using Pair_t = std::common_type_t<Ts...>;
+	using Key_t = typename Pair_t::first_type;
+	using Value_t = typename Pair_t::second_type;
+	return ct_map<Key_t, Value_t, sizeof...(Ts)>{std::forward<Ts>(ts)...};
+}
