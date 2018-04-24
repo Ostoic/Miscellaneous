@@ -225,7 +225,6 @@ int main()
 					continue;
 				}
 
-				// output production
 				if (actions.count(lexeme) == 0)
 				{
 					std::stringstream error_message;
@@ -235,6 +234,7 @@ int main()
 					throw std::out_of_range(error_message.str());
 				}
 
+				// output production
 				actions.at(lexeme)(productions);
 			}
 
