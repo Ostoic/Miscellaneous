@@ -1,4 +1,4 @@
-// RenameScript.cpp : A short C++ "script" to change file extensions from .inl to .hxx.
+// rename_headers.cpp : A short C++ "script" to change file extensions from .inl to .hxx.
 // This is mostly just to get some practice with std::filesystem.
 
 #include <experimental\filesystem>
